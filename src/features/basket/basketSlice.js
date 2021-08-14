@@ -1,4 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { authCurrentUserSelector } from '../auth/authSlice';
 
 /** @type {{productList: [{price: number}]}} */
 const initialState = {
@@ -26,6 +27,11 @@ export const basketProductsSelector = (state) => state.basket.productList;
 
 export const subtotalSelector = createSelector(basketProductsSelector, (list) =>
   list.reduce((previousValue, currentValue) => previousValue + currentValue.price, 0)
+);
+export const totalSelector = createSelector(
+  subtotalSelector,
+  authCurrentUserSelector,
+  (subtotal, currentUser) => subtotal - (subtotal / 100) * currentUser.extraDiscountPercent
 );
 
 export const { add, remove } = basketSlice.actions;

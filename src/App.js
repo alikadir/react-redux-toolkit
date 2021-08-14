@@ -1,4 +1,5 @@
 import React from 'react';
+import AuthWidget from './features/auth/AuthWidget';
 import Basket from './features/basket/Basket';
 import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
@@ -9,7 +10,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <AuthWidget />
+
         <Counter />
+
         <Basket />
         <p>
           Edit <code>src/App.js</code> and save to reload.
