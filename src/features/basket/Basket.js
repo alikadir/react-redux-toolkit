@@ -1,11 +1,19 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { basketProductsSelector, subtotalSelector, remove, add, totalSelector } from './basketSlice';
+import {
+  basketProductsSelector,
+  subtotalSelector,
+  remove,
+  totalSelector,
+  checkStockAndAddBasket,
+} from './basketSlice';
 
 const Basket = (props) => {
   const productList = useSelector(basketProductsSelector);
 
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.basket.isLoading);
+  const error = useSelector((state) => state.basket.error);
   const subtotal = useSelector(subtotalSelector);
   const total = useSelector(totalSelector);
   const nameInputRef = useRef();
@@ -20,7 +28,7 @@ const Basket = (props) => {
     priceInputRef.current.value = '';
 
     dispatch(
-      add({
+      checkStockAndAddBasket({
         id: Math.random(),
         name,
         price,
@@ -41,6 +49,8 @@ const Basket = (props) => {
       <p>Sub Total: {f.format(subtotal)} TRY</p>
       <p>Total: {f.format(total)} TRY</p>
       <div>
+        <p>{isLoading && 'checking...'}</p>
+        <p style={{ color: 'red' }}>{error && error.message}</p>
         <input type="text" ref={nameInputRef} placeholder="name" />
         <input type="number" ref={priceInputRef} placeholder="price" />
         <button onClick={handleClickAddProduct}>+</button>

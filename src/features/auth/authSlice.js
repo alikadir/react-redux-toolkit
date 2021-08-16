@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentUser: { name: 'Ali Kadir', extraDiscountPercent: 5 },
+  currentUser: { id: 12345, name: 'Ali Kadir', extraDiscountPercent: 5 },
 };
 
 export const authSlice = createSlice({
